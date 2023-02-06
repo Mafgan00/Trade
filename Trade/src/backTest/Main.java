@@ -6,9 +6,6 @@ import data.HistoricalData;
 
 public class Main {
 	
-	
-	double ukOilPerWti = 1.08;
-	
 	public static void main(String[] args) {
 		
 		ReadCsv rc = new ReadCsv();
