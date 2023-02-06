@@ -12,9 +12,9 @@ import data.HistoricalData;
 public class PairTradeStrategy {
 	
 	//買いトリガーの閾値
-	final double upperThreshold = 1.09;
+	final double upperThreshold = 1.08;
 	//売りトリガーの閾値
-	final double lowerThreshold = 1.05;
+	final double lowerThreshold = 1.04;
 	
 	Account account = new Account();
 	
@@ -43,18 +43,33 @@ public class PairTradeStrategy {
 			if(position && buyData1position) {
 				
 				//ポジションクローズ時の閾値判定
-				if(data2Perdata1 <= upperThreshold - 0.01) {
+				if(data2Perdata1 <= upperThreshold - 0.03) {
 					double profitAndLoss =  data1Price - positionData1Price + positionData2Price - data2Price;
 					account.setProfitAndLoss(account.getProfitAndLoss()+profitAndLoss);
+					position = false;
+				}
+				//ポジションクローズ(損切り)時の閾値判定
+				if(data2Perdata1 >= upperThreshold + 0.1) {
+					double profitAndLoss =  data1Price - positionData1Price + positionData2Price - data2Price;
+					account.setProfitAndLoss(account.getProfitAndLoss()+profitAndLoss);
+					position = false;
 				}
 				
 			//Position保有時かつData1売りData2買い
 			}else if(position && !buyData1position) {
 				
 				//ポジションクローズ時の閾値判定
-				if(data2Perdata1 >= lowerThreshold + 0.01) {
+				if(data2Perdata1 >= lowerThreshold + 0.03) {
 					double profitAndLoss =  data2Price - positionData2Price + positionData1Price - data1Price;
 					account.setProfitAndLoss(account.getProfitAndLoss()+profitAndLoss);
+					position = false;
+				}
+				
+				//ポジションクローズ(損切り)時の閾値判定
+				if(data2Perdata1 <= lowerThreshold - 0.1) {
+					double profitAndLoss =  data2Price - positionData2Price + positionData1Price - data1Price;
+					account.setProfitAndLoss(account.getProfitAndLoss()+profitAndLoss);
+					position = false;
 				}
 				
 			}
