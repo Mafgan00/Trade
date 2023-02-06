@@ -18,7 +18,7 @@ public class WriteCsv {
 	 * @param List<Double> 累積損益のリスト
 	 */
 	public void write(List<Double> profitAndLoss) {
-		try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("profitAndLoss.csv", true), StandardCharsets.UTF_8))) {
+		try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("profitAndLoss.csv", false), StandardCharsets.UTF_8))) {
 			
 			for (Double pal : profitAndLoss) {
 				bw.write(String.valueOf(pal));
